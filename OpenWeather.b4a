@@ -1,0 +1,90 @@
+﻿Version=6.48
+NumberOfModules=2
+Module1=Weather
+Module2=Starter
+Build1=Default,b4a.example
+ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: https://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="5" android:targetSdkVersion="26"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~'End of default text.~\n~~\n~SetApplicationAttribute(android:theme, "@style/LightTheme")~\n~CreateResource(values-v20, theme.xml,~\n~<resources>~\n~    <style~\n~        name="LightTheme" parent="@android:style/Theme.Material.Light">~\n~    </style>~\n~</resources>~\n~)~\n~CreateResource(values-v14, theme.xml,~\n~<resources>~\n~    <style~\n~        name="LightTheme" parent="@android:style/Theme.Holo.Light">~\n~    </style>~\n~</resources>~\n~)~\n~~\n~AddManifestText(<uses-permission~\n~android:name="android.permission.WRITE_EXTERNAL_STORAGE"~\n~android:maxSdkVersion="18" />~\n~)~\n~
+IconFile=
+NumberOfFiles=9
+File1=01.png
+File2=02.png
+File3=03.png
+File4=09.png
+File5=10.png
+File6=11.png
+File7=13.png
+File8=2.bal
+File9=loading.png
+NumberOfLibraries=4
+Library1=core
+Library2=json
+Library3=okhttputils2
+Library4=dateutils
+@EndOfDesignText@
+#Region  Project Attributes 
+	#ApplicationLabel: prognoza pogody 1.5
+	#VersionCode: 1
+	#VersionName: 
+	'SupportedOrientations possible values: unspecified, landscape or portrait.
+	#SupportedOrientations: unspecified
+	#CanInstallToExternalStorage: False
+#End Region
+
+#Region  Activity Attributes 
+	#FullScreen: False
+	#IncludeTitle: True
+#End Region
+
+Sub Process_Globals	
+End Sub
+
+Sub Globals
+	Private wt As Weather	
+	
+	Private Label1 As Label
+	Private Label2 As Label
+	Private Label3 As Label
+	Private Label4 As Label
+	Private imgWeather2 As ImageView
+	Private imgWeather1 As ImageView
+	Private imgWeather3 As ImageView
+	Private imgWeather4 As ImageView
+End Sub
+
+Sub Activity_Create(FirstTime As Boolean)
+	Activity.LoadLayout("2")
+	wt.Initialize(Me, "wt", "7530858", True, 10) '7530858-sniadeckich_Poznań, 7531836-św.Marcin,7533378-Śrem,53.2579-Brodnica(obok Manieczek)
+	
+End Sub
+
+Sub Activity_Resume()
+End Sub
+
+Sub Activity_Pause (UserClosed As Boolean)
+End Sub
+
+Sub wt_Ready()
+	ShowWeather
+End Sub
+
+Sub wt_Failed()
+	Log("wt_Failed")
+	Label1.Text = "brak info o pogodzie"
+End Sub
+
+Sub ShowWeather()
+	
+	Label1.Text = "ikona 1:"  & wt.giveicon(0) & CRLF & "ikona 2:"  & wt.giveicon(1) & CRLF & "ikona 2:"  & wt.giveicon(3) & CRLF & "ikona 2:"  & wt.giveicon(4)
+
+	'Label1.Text = wt.givedtlist(0) & CRLF & "temperatura:" & wt.givetemp(0) & CRLF & wt.givedescription(0)
+	Label2.Text = wt.givedtlist(1) & CRLF & "temperatura:" & wt.givetemp(1) & CRLF & wt.givedescription(1) 
+	Label3.Text = wt.givedtlist(2) & CRLF & "temperatura:" & wt.givetemp(2) & CRLF & wt.givedescription(2) 
+	Label4.Text = wt.givedtlist(3) & CRLF & "temperatura:" & wt.givetemp(3) & CRLF & wt.givedescription(3) 
+	
+	imgWeather1.Bitmap = LoadBitmap(File.DirAssets, wt.giveicon(0))
+	imgWeather2.Bitmap = LoadBitmap(File.DirAssets, wt.giveicon(1))
+	imgWeather3.Bitmap = LoadBitmap(File.DirAssets, wt.giveicon(2))
+	imgWeather4.Bitmap = LoadBitmap(File.DirAssets, wt.giveicon(3))
+End Sub
+
+
