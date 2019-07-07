@@ -88,7 +88,7 @@ private Sub tmrInterval_Tick()
 End Sub
 
 Public Sub givetemp(number As Int) As Double
-	Return(templist(number))
+	Return(NumberFormat(templist(number), 0, 1))
 End Sub
 
 Public Sub givedescription(number As Int) As String

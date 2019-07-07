@@ -1,7 +1,8 @@
 ﻿Version=6.48
-NumberOfModules=2
+NumberOfModules=3
 Module1=Weather
-Module2=Starter
+Module2=POWROT
+Module3=Starter
 Build1=Default,b4a.example
 ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: https://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="5" android:targetSdkVersion="26"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~'End of default text.~\n~~\n~SetApplicationAttribute(android:theme, "@style/LightTheme")~\n~CreateResource(values-v20, theme.xml,~\n~<resources>~\n~    <style~\n~        name="LightTheme" parent="@android:style/Theme.Material.Light">~\n~    </style>~\n~</resources>~\n~)~\n~CreateResource(values-v14, theme.xml,~\n~<resources>~\n~    <style~\n~        name="LightTheme" parent="@android:style/Theme.Holo.Light">~\n~    </style>~\n~</resources>~\n~)~\n~~\n~AddManifestText(<uses-permission~\n~android:name="android.permission.WRITE_EXTERNAL_STORAGE"~\n~android:maxSdkVersion="18" />~\n~)~\n~
 IconFile=
@@ -15,19 +16,21 @@ File6=11.png
 File7=13.png
 File8=2.bal
 File9=loading.png
-NumberOfLibraries=4
+NumberOfLibraries=6
 Library1=core
 Library2=json
 Library3=okhttputils2
 Library4=dateutils
+Library5=serial
+Library6=phone
 @EndOfDesignText@
 #Region  Project Attributes 
-	#ApplicationLabel: prognoza pogody 1.5
-	#VersionCode: 1
+	#ApplicationLabel: prognoza pogody 2.0
+	#VersionCode: 2
 	#VersionName: 
 	'SupportedOrientations possible values: unspecified, landscape or portrait.
-	#SupportedOrientations: unspecified
 	#CanInstallToExternalStorage: False
+	#SupportedOrientations: landscape
 #End Region
 
 #Region  Activity Attributes 
@@ -36,6 +39,11 @@ Library4=dateutils
 #End Region
 
 Sub Process_Globals	
+	Dim Serial1 As Serial
+	Type NameAndMac( Name As String, Mac As String )
+	Dim admin As BluetoothAdmin
+	Dim ekran As PhoneWakeState
+
 End Sub
 
 Sub Globals
@@ -53,11 +61,82 @@ Sub Globals
 	Private temp2 As Label
 	Private temp3 As Label
 	Private temp4 As Label
+	Private godzina As Label
+	
+	Dim Timer1 As Timer
+	Dim timer2_json As Timer
+	
+	Dim odliczaj As Int = 0
+	Dim cykl As Boolean
+	Dim godzina_text As String
+	
+	Private test As Label
+	Dim zmienna  As Long
+	
+	
+	'zmienne do wyswietlania temperatury
+	Dim Timer2 As Timer
+	Dim connected As Boolean
+	Dim TextReader1 As TextReader
+	Dim TextWriter1 As TextWriter
+	Dim odczyt_BT As String
+	Dim odczyt As String
+	Dim temp_max As Double, temp_min As Double
+	Dim urz As Boolean
+	Dim zmiana As Boolean
+	Dim i As Long
+	
+	Private tempwew As Label
+	Private tempzew As Label
+	Private woodstock1 As Label
 End Sub
 
 Sub Activity_Create(FirstTime As Boolean)
+	If FirstTime Then
+		admin.Initialize("admin")
+		If admin.IsEnabled = False Then
+			admin.Enable
+			Do Until admin.IsEnabled
+				DoEvents
+			Loop
+		End If
+		Serial1.Initialize("Serial1")
+		Timer1.Initialize("Timer1", 500)
+		timer2_json.Initialize("timer2_json", 150000) ' czas w milisekndach - 1h
+		Timer2.Initialize("Timer2", 4000)
+	End If
+
 	Activity.LoadLayout("2")
 	wt.Initialize(Me, "wt", "7530858", True, 10) '7530858-sniadeckich_Poznań, 7531836-św.Marcin,7533378-Śrem,53.2579-Brodnica(obok Manieczek)
+	
+	Timer1.Enabled = True
+	timer2_json.Enabled = True
+	Timer2.Enabled = False
+	
+	Dim PhoneId As PhoneId
+	Dim zasilanie As PhoneEvents
+	zasilanie.InitializeWithPhoneState("zasilanie", PhoneId)
+	
+	ekran.KeepAlive (True)
+	
+	Dim maxmin As String, i As Long
+	Try
+		maxmin = File.ReadString(File.DirRootExternal, "MaxMin.txt")
+		Dim data As Long
+		data = File.LastModified(File.DirRootExternal, "MaxMin.txt")
+		If DateTime.Date(data) = DateTime.Date(DateTime.Now) Then
+			i = maxmin.IndexOf(";")
+			temp_min =  NumberFormat(maxmin.SubString(i+1),1,1)
+			temp_max =  NumberFormat(maxmin.SubString2(0, i),1,1)
+		Else
+			temp_min =  100
+			temp_max = -100
+		End If
+	Catch
+		temp_min =  100
+		temp_max = -100
+	End Try
+	admin.StartDiscovery
 	
 End Sub
 
@@ -93,6 +172,136 @@ Sub ShowWeather()
 	imgWeather2.Bitmap = LoadBitmap(File.DirAssets, wt.giveicon(1))
 	imgWeather3.Bitmap = LoadBitmap(File.DirAssets, wt.giveicon(2))
 	imgWeather4.Bitmap = LoadBitmap(File.DirAssets, wt.giveicon(3))
+End Sub
+
+Sub timer1_Tick
+	
+	
+	Dim wood_stamp As Long = 1564380000000  - (3600000*24)
+	Dim now_stamp As Long = DateTime.Now
+						
+	zmienna = wood_stamp - now_stamp
+	Log("woodstamp:" & wood_stamp)
+	Log("now_stamp:" & now_stamp)
+	DateTime.DateFormat = "HH dd:MM:yyyy"
+	Log("teraz2:" & zmienna & "data: " & DateTime.date(zmienna))
+	
+	
+	
+	DateTime.DateFormat = "dd"
+	DateTime.TimeFormat = "HH:mm:ss"
+	woodstock1.text = DateTime.Time(zmienna) & CRLF & DateTime.date(zmienna) & " dni"
+	
+	
+	cykl = Not (cykl)
+		godzina_text = NumberFormat(DateTime.GetHour(DateTime.Now),2,0) & ":" & NumberFormat( DateTime.GetMinute(DateTime.Now),2,0)
+	
+	If cykl= True Then
+		godzina.Text = godzina_text & "."
+	Else
+		godzina.Text = godzina_text & ""
+	End If
+	
+End Sub
+
+Sub timer2_json_Tick
+	ShowWeather
+	
+End Sub
+
+
+Sub admin_DeviceFound (Name As String, MacAddress As String)
+	Dim PairedDevices As Map, foundDevices As List
+	Dim nm As NameAndMac
+	foundDevices.Initialize
+	nm.Name = Name
+	nm.Mac = MacAddress
+	foundDevices.Add( nm )
+	If foundDevices.Size > 0 Then
+		For i= 0 To foundDevices.Size-1
+			nm = foundDevices.Get(i)
+			If nm.Name = "HC-05" Then
+				PairedDevices = Serial1.GetPairedDevices
+				Serial1.Connect(PairedDevices.Get("HC-05"))
+				urz = True
+				connected = True
+				Timer2.Enabled = True
+			End If
+			If urz = True Then Exit
+			urz = False
+		Next
+	End If
+End Sub
+
+
+Sub Serial1_Connected (Success As Boolean)
+	If Success Then
+		TextReader1.Initialize(Serial1.InputStream)
+		TextWriter1.Initialize(Serial1.OutputStream)
+		TextWriter1.Flush
+		connected = True
+		Timer2.Enabled = True
+		ToastMessageShow("Połączono!", False)
+	Else
+		ToastMessageShow(LastException.Message, False)
+		'Serial1.Disconnect
+		urz = False
+		admin.StartDiscovery
+	End If
+End Sub
+
+
+
+Sub timer2_Tick
+	If connected Then
+		Try
+			TextWriter1.WriteLine("O")
+			TextWriter1.Flush
+			Do Until TextReader1.Ready 'check if there is any data waiting to be read
+				DoEvents
+			Loop
+			odczyt_BT = TextReader1.ReadLine
+			If connected  Then
+				i = odczyt_BT.IndexOf(";")
+				odczyt = odczyt_BT.SubString(i+1)
+				If odczyt <> "Blad" Then
+					Dim war As Double
+					war = odczyt
+
+					If war > 0 Then
+						tempzew.Text = "+" & odczyt_BT.SubString(i+1) & "°C"
+											
+					Else
+						tempzew.Text = CRLF & odczyt_BT.SubString(i+1) & "°C"
+					End If
+					If odczyt_BT.SubString2(0, i) <> "Blad" Then
+				
+						tempwew.Text = odczyt_BT.SubString2(0, i)  & "°C"
+						Log("odczyt: " & odczyt_BT.SubString2(0, i))
+					Else
+						tempwew.Text = "Błąd"
+						Log("test1")
+					End If
+					Dim i As Long, liczba As Double
+					Dim godz As String, minuta As String
+					liczba =  odczyt
+					godz = NumberFormat(DateTime.GetHour(DateTime.Now),2,0)
+					minuta = NumberFormat( DateTime.GetMinute(DateTime.Now),2,0)
+					If godz <> "00" Then zmiana = True
+
+				Else
+					tempzew.Text = "Błąd"
+				End If
+			End If
+		Catch
+			ToastMessageShow(LastException,True)
+			If connected Then Serial1.Disconnect
+			connected = False
+			Timer2.Enabled = False
+			urz= False
+			StartService (POWROT)
+		End Try
+	End If
 End Sub
 
 
