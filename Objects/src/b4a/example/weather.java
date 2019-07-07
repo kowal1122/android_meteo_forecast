@@ -84,6 +84,47 @@ RDebugUtils.currentLine=589837;
  //BA.debugLineNum = 589837;BA.debugLine="End Sub";
 return "";
 }
+public String  _givedtlist(b4a.example.weather __ref,int _number) throws Exception{
+__ref = this;
+RDebugUtils.currentModule="weather";
+if (Debug.shouldDelegate(ba, "givedtlist"))
+	return (String) Debug.delegate(ba, "givedtlist", new Object[] {_number});
+long _expdate = 0L;
+RDebugUtils.currentLine=1048576;
+ //BA.debugLineNum = 1048576;BA.debugLine="Public Sub givedtlist(number As Int) As String";
+RDebugUtils.currentLine=1048577;
+ //BA.debugLineNum = 1048577;BA.debugLine="Dim ExpDate As Long = DateUtils.UnixTimeToTicks(d";
+_expdate = _dateutils._unixtimetoticks(getActivityBA(),(long) (__ref._dtlist[_number]));
+RDebugUtils.currentLine=1048578;
+ //BA.debugLineNum = 1048578;BA.debugLine="DateTime.DateFormat = \"dd-MM\"";
+__c.DateTime.setDateFormat("dd-MM");
+RDebugUtils.currentLine=1048579;
+ //BA.debugLineNum = 1048579;BA.debugLine="DateTime.TimeFormat = \"HH:mm\"";
+__c.DateTime.setTimeFormat("HH:mm");
+RDebugUtils.currentLine=1048580;
+ //BA.debugLineNum = 1048580;BA.debugLine="Return(DateTime.Time(ExpDate)  & \" \" & DateTime.D";
+if (true) return (__c.DateTime.Time(_expdate)+" "+__c.DateTime.Date(_expdate));
+RDebugUtils.currentLine=1048581;
+ //BA.debugLineNum = 1048581;BA.debugLine="Log(DateTime.Date(ExpDate))";
+__c.Log(__c.DateTime.Date(_expdate));
+RDebugUtils.currentLine=1048582;
+ //BA.debugLineNum = 1048582;BA.debugLine="End Sub";
+return "";
+}
+public double  _givetemp(b4a.example.weather __ref,int _number) throws Exception{
+__ref = this;
+RDebugUtils.currentModule="weather";
+if (Debug.shouldDelegate(ba, "givetemp"))
+	return (Double) Debug.delegate(ba, "givetemp", new Object[] {_number});
+RDebugUtils.currentLine=851968;
+ //BA.debugLineNum = 851968;BA.debugLine="Public Sub givetemp(number As Int) As Double";
+RDebugUtils.currentLine=851969;
+ //BA.debugLineNum = 851969;BA.debugLine="Return(templist(number))";
+if (true) return (__ref._templist[_number]);
+RDebugUtils.currentLine=851970;
+ //BA.debugLineNum = 851970;BA.debugLine="End Sub";
+return 0;
+}
 public String  _giveicon(b4a.example.weather __ref,int _number) throws Exception{
 __ref = this;
 RDebugUtils.currentModule="weather";
@@ -143,52 +184,6 @@ if (true) return ("loading.png");
 ;
 RDebugUtils.currentLine=983057;
  //BA.debugLineNum = 983057;BA.debugLine="End Sub";
-return "";
-}
-public String  _givedtlist(b4a.example.weather __ref,int _number) throws Exception{
-__ref = this;
-RDebugUtils.currentModule="weather";
-if (Debug.shouldDelegate(ba, "givedtlist"))
-	return (String) Debug.delegate(ba, "givedtlist", new Object[] {_number});
-long _expdate = 0L;
-RDebugUtils.currentLine=1048576;
- //BA.debugLineNum = 1048576;BA.debugLine="Public Sub givedtlist(number As Int) As String";
-RDebugUtils.currentLine=1048577;
- //BA.debugLineNum = 1048577;BA.debugLine="Dim ExpDate As Long = DateUtils.UnixTimeToTicks(d";
-_expdate = _dateutils._unixtimetoticks(getActivityBA(),(long) (__ref._dtlist[_number]));
-RDebugUtils.currentLine=1048578;
- //BA.debugLineNum = 1048578;BA.debugLine="Return(DateTime.Date(ExpDate)  & \" \" & DateTime.t";
-if (true) return (__c.DateTime.Date(_expdate)+" "+__c.DateTime.Time(_expdate));
-RDebugUtils.currentLine=1048579;
- //BA.debugLineNum = 1048579;BA.debugLine="End Sub";
-return "";
-}
-public double  _givetemp(b4a.example.weather __ref,int _number) throws Exception{
-__ref = this;
-RDebugUtils.currentModule="weather";
-if (Debug.shouldDelegate(ba, "givetemp"))
-	return (Double) Debug.delegate(ba, "givetemp", new Object[] {_number});
-RDebugUtils.currentLine=851968;
- //BA.debugLineNum = 851968;BA.debugLine="Public Sub givetemp(number As Int) As Double";
-RDebugUtils.currentLine=851969;
- //BA.debugLineNum = 851969;BA.debugLine="Return(templist(number))";
-if (true) return (__ref._templist[_number]);
-RDebugUtils.currentLine=851970;
- //BA.debugLineNum = 851970;BA.debugLine="End Sub";
-return 0;
-}
-public String  _givedescription(b4a.example.weather __ref,int _number) throws Exception{
-__ref = this;
-RDebugUtils.currentModule="weather";
-if (Debug.shouldDelegate(ba, "givedescription"))
-	return (String) Debug.delegate(ba, "givedescription", new Object[] {_number});
-RDebugUtils.currentLine=917504;
- //BA.debugLineNum = 917504;BA.debugLine="Public Sub givedescription(number As Int) As Strin";
-RDebugUtils.currentLine=917505;
- //BA.debugLineNum = 917505;BA.debugLine="Return(descriptionlist(number))";
-if (true) return (__ref._descriptionlist[_number]);
-RDebugUtils.currentLine=917506;
- //BA.debugLineNum = 917506;BA.debugLine="End Sub";
 return "";
 }
 public String  _class_globals(b4a.example.weather __ref) throws Exception{
@@ -267,6 +262,20 @@ RDebugUtils.currentLine=655367;
 __c.Log("download: "+BA.ObjectToString(_j));
 RDebugUtils.currentLine=655369;
  //BA.debugLineNum = 655369;BA.debugLine="End Sub";
+return "";
+}
+public String  _givedescription(b4a.example.weather __ref,int _number) throws Exception{
+__ref = this;
+RDebugUtils.currentModule="weather";
+if (Debug.shouldDelegate(ba, "givedescription"))
+	return (String) Debug.delegate(ba, "givedescription", new Object[] {_number});
+RDebugUtils.currentLine=917504;
+ //BA.debugLineNum = 917504;BA.debugLine="Public Sub givedescription(number As Int) As Strin";
+RDebugUtils.currentLine=917505;
+ //BA.debugLineNum = 917505;BA.debugLine="Return(descriptionlist(number))";
+if (true) return (__ref._descriptionlist[_number]);
+RDebugUtils.currentLine=917506;
+ //BA.debugLineNum = 917506;BA.debugLine="End Sub";
 return "";
 }
 public String  _jobdone(b4a.example.weather __ref,anywheresoftware.b4a.samples.httputils2.httpjob _job) throws Exception{

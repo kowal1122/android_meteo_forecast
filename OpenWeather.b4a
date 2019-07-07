@@ -31,8 +31,8 @@ Library4=dateutils
 #End Region
 
 #Region  Activity Attributes 
-	#FullScreen: False
-	#IncludeTitle: True
+	#FullScreen: True
+	#IncludeTitle: False
 #End Region
 
 Sub Process_Globals	
@@ -49,6 +49,10 @@ Sub Globals
 	Private imgWeather1 As ImageView
 	Private imgWeather3 As ImageView
 	Private imgWeather4 As ImageView
+	Private temp1 As Label
+	Private temp2 As Label
+	Private temp3 As Label
+	Private temp4 As Label
 End Sub
 
 Sub Activity_Create(FirstTime As Boolean)
@@ -74,12 +78,16 @@ End Sub
 
 Sub ShowWeather()
 	
-	Label1.Text = "ikona 1:"  & wt.giveicon(0) & CRLF & "ikona 2:"  & wt.giveicon(1) & CRLF & "ikona 2:"  & wt.giveicon(3) & CRLF & "ikona 2:"  & wt.giveicon(4)
+	Label1.Text = wt.givedtlist(0)
+	Label2.Text = wt.givedtlist(1)
+	Label3.Text = wt.givedtlist(2)
+	Label4.Text = wt.givedtlist(3) 
+	
 
-	'Label1.Text = wt.givedtlist(0) & CRLF & "temperatura:" & wt.givetemp(0) & CRLF & wt.givedescription(0)
-	Label2.Text = wt.givedtlist(1) & CRLF & "temperatura:" & wt.givetemp(1) & CRLF & wt.givedescription(1) 
-	Label3.Text = wt.givedtlist(2) & CRLF & "temperatura:" & wt.givetemp(2) & CRLF & wt.givedescription(2) 
-	Label4.Text = wt.givedtlist(3) & CRLF & "temperatura:" & wt.givetemp(3) & CRLF & wt.givedescription(3) 
+	temp1.Text = wt.givetemp(0) & "°C"
+	temp2.Text = wt.givetemp(1) & "°C"
+	temp3.Text = wt.givetemp(2) & "°C"
+	temp4.Text = wt.givetemp(3) & "°C"
 	
 	imgWeather1.Bitmap = LoadBitmap(File.DirAssets, wt.giveicon(0))
 	imgWeather2.Bitmap = LoadBitmap(File.DirAssets, wt.giveicon(1))

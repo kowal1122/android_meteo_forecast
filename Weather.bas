@@ -4,7 +4,7 @@ ModulesStructureVersion=1
 B4A=true
 @EndOfDesignText@
 Sub Class_Globals
-	Public weatherAPIKey As String = "############"
+	Public weatherAPIKey As String = "d6870f22a6a2ce786ae2e31bb33a1a2f"
 	Public weatherCityID As String
 	Private m_RefreshInterval As Int
 	Private tmrInterval As Timer
@@ -117,7 +117,10 @@ End Sub
 
 Public Sub givedtlist(number As Int) As String		
 	Dim ExpDate As Long = DateUtils.UnixTimeToTicks(dtlist(number))
-	Return(DateTime.Date(ExpDate)  & " " & DateTime.time(ExpDate))
+	DateTime.DateFormat = "dd-MM"
+	DateTime.TimeFormat = "HH:mm"
+	Return(DateTime.Time(ExpDate)  & " " & DateTime.Date(ExpDate))
+	Log(DateTime.Date(ExpDate))
 End Sub
 
 

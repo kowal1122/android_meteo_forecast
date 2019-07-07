@@ -2,19 +2,19 @@ b4a.example
 0
 1
 weather
-main,activity_create,1,0,31,35
-,imgweather1,,imgweather2,,imgweather3,,imgweather4,,label1,,label2,,label3,,label4,,wt
-,imgweather1,,imgweather2,,imgweather3,,imgweather4,,label1,,label2,,label3,,label4
+main,activity_create,1,0,35,39
+,imgweather1,,imgweather2,,imgweather3,,imgweather4,,label1,,label2,,label3,,label4,,temp1,,temp2,,temp3,,temp4,,wt
+,imgweather1,,imgweather2,,imgweather3,,imgweather4,,label1,,label2,,label3,,label4,,temp1,,temp2,,temp3,,temp4
 weather,initialize,weather,downloadweather
-main,activity_pause,0,0,40,41
+main,activity_pause,0,0,44,45
 
 
 
-main,activity_resume,0,0,37,38
+main,activity_resume,0,0,41,42
 
 
 
-main,globals,0,1,18,29
+main,globals,0,1,18,33
 
 
 
@@ -22,27 +22,23 @@ main,process_globals,0,1,15,16
 
 
 
-main,showweather,0,1,52,65
-,label1,,wt,,label2,,label3,,label4,,imgweather1,,imgweather2,,imgweather3,,imgweather4
+main,showweather,0,1,56,73
+,label1,,wt,,label2,,label3,,label4,,temp1,,temp2,,temp3,,temp4,,imgweather1,,imgweather2,,imgweather3,,imgweather4
 
-weather,giveicon,weather,givedtlist,weather,givetemp,weather,givedescription
-main,wt_failed,0,0,47,50
+weather,givedtlist,weather,givetemp,weather,giveicon
+main,wt_failed,0,0,51,54
 ,label1
 
 
-main,wt_ready,0,0,43,45
-,label1,,wt,,label2,,label3,,label4,,imgweather1,,imgweather2,,imgweather3,,imgweather4
+main,wt_ready,0,0,47,49
+,label1,,wt,,label2,,label3,,label4,,temp1,,temp2,,temp3,,temp4,,imgweather1,,imgweather2,,imgweather3,,imgweather4
 
-,showweather,weather,giveicon,weather,givedtlist,weather,givetemp,weather,givedescription
+,showweather,weather,givedtlist,weather,givetemp,weather,giveicon
 weather,initialize,0,0,22,35
 
 
 ,downloadweather
-weather,giveicon,0,1,94,111
-
-
-
-weather,givedtlist,0,0,113,116
+weather,givedtlist,0,0,113,119
 
 
 
@@ -50,11 +46,11 @@ weather,givetemp,0,0,85,87
 
 
 
-weather,givedescription,0,0,89,91
+weather,giveicon,0,0,94,111
 
 
 
-weather,class_globals,0,1,1,16
+weather,class_globals,0,0,1,16
 
 
 
@@ -62,11 +58,15 @@ weather,downloadweather,0,0,42,51
 
 
 
+weather,givedescription,0,0,89,91
+
+
+
 weather,jobdone,0,0,54,78
 
 
 ,parseweatherdata
-weather,parseweatherdata,0,0,120,169
+weather,parseweatherdata,0,0,123,172
 
 
 

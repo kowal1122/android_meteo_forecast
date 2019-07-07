@@ -64,10 +64,14 @@ public static RemoteObject _imgweather2 = RemoteObject.declareNull("anywheresoft
 public static RemoteObject _imgweather1 = RemoteObject.declareNull("anywheresoftware.b4a.objects.ImageViewWrapper");
 public static RemoteObject _imgweather3 = RemoteObject.declareNull("anywheresoftware.b4a.objects.ImageViewWrapper");
 public static RemoteObject _imgweather4 = RemoteObject.declareNull("anywheresoftware.b4a.objects.ImageViewWrapper");
+public static RemoteObject _temp1 = RemoteObject.declareNull("anywheresoftware.b4a.objects.LabelWrapper");
+public static RemoteObject _temp2 = RemoteObject.declareNull("anywheresoftware.b4a.objects.LabelWrapper");
+public static RemoteObject _temp3 = RemoteObject.declareNull("anywheresoftware.b4a.objects.LabelWrapper");
+public static RemoteObject _temp4 = RemoteObject.declareNull("anywheresoftware.b4a.objects.LabelWrapper");
 public static RemoteObject _httputils2service = RemoteObject.declareNull("anywheresoftware.b4a.samples.httputils2.httputils2service");
 public static RemoteObject _dateutils = RemoteObject.declareNull("b4a.example.dateutils");
 public static b4a.example.starter _starter = null;
   public Object[] GetGlobals() {
-		return new Object[] {"Activity",main.mostCurrent._activity,"DateUtils",main.mostCurrent._dateutils,"HttpUtils2Service",main.mostCurrent._httputils2service,"imgWeather1",main.mostCurrent._imgweather1,"imgWeather2",main.mostCurrent._imgweather2,"imgWeather3",main.mostCurrent._imgweather3,"imgWeather4",main.mostCurrent._imgweather4,"Label1",main.mostCurrent._label1,"Label2",main.mostCurrent._label2,"Label3",main.mostCurrent._label3,"Label4",main.mostCurrent._label4,"Starter",Debug.moduleToString(b4a.example.starter.class),"wt",main.mostCurrent._wt};
+		return new Object[] {"Activity",main.mostCurrent._activity,"DateUtils",main.mostCurrent._dateutils,"HttpUtils2Service",main.mostCurrent._httputils2service,"imgWeather1",main.mostCurrent._imgweather1,"imgWeather2",main.mostCurrent._imgweather2,"imgWeather3",main.mostCurrent._imgweather3,"imgWeather4",main.mostCurrent._imgweather4,"Label1",main.mostCurrent._label1,"Label2",main.mostCurrent._label2,"Label3",main.mostCurrent._label3,"Label4",main.mostCurrent._label4,"Starter",Debug.moduleToString(b4a.example.starter.class),"temp1",main.mostCurrent._temp1,"temp2",main.mostCurrent._temp2,"temp3",main.mostCurrent._temp3,"temp4",main.mostCurrent._temp4,"wt",main.mostCurrent._wt};
 }
 }
