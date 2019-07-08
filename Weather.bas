@@ -16,8 +16,7 @@ Sub Class_Globals
 	Private dtlist(40) As Int
 	Private speedlist(40) As Int
 	Private templist(40) As Double
-	
-	Dim i As Int = 0
+
 End Sub
 
 'TargetActivity is the activity that will receive the ready and failed events
@@ -126,6 +125,8 @@ End Sub
 
 
 Public Sub ParseWeatherData(jsonData As String)
+	Dim i As Int = 0
+	
 	Dim js As JSONParser
 	Dim root As Map
 	Dim map As Map
@@ -148,13 +149,12 @@ Public Sub ParseWeatherData(jsonData As String)
 		Dim dt As Int = collist.Get("dt")
 		dtlist(i) = dt
 		Dim weather As List = collist.Get("weather")
-		
 		For Each colweather As Map In weather
-			Dim icon As String  = colweather.Get("icon") 				'nazwa ikonki
-			Dim description As String  = colweather.Get("description")   'opis słowny
-			iconlist(i) = icon
-			descriptionlist(i) = description
-			Log(i & "-" & "dane: " & iconlist(i) & " " & dtlist(i) & " " & descriptionlist(i))
+ 				
+			iconlist(i) = colweather.Get("icon") 'nazwa ikonki
+			descriptionlist(i) = colweather.Get("description")  'opis słowny
+			
+			Log(i & " ---------------------" & CRLF & "dane: " & iconlist(i) & CRLF & "dtlist:" & dtlist(i) & CRLF & "descriptionlist:" &descriptionlist(i))
 		Next
 		
 	'	Log("IndexOf;" & description.ToLowerCase())	
@@ -169,7 +169,6 @@ Public Sub ParseWeatherData(jsonData As String)
 		i = i +1
 	Next
 	
-		'bez tego nie pojawiaja sie dane, rozkimnic po co to
 	If SubExists(callBackActivity, eventPrefix & "_Ready") Then
 		CallSubDelayed(callBackActivity, eventPrefix & "_Ready")
 	End If

@@ -72,7 +72,7 @@ Sub Globals
 	
 	Private test As Label
 	Dim zmienna  As Long
-	
+	Dim odliczanie As Float
 	
 	'zmienne do wyswietlania temperatury
 	Dim Timer2 As Timer
@@ -148,6 +148,7 @@ End Sub
 
 Sub wt_Ready()
 	ShowWeather
+	Log("uruchomienie wt_Ready")
 End Sub
 
 Sub wt_Failed()
@@ -176,16 +177,13 @@ End Sub
 
 Sub timer1_Tick
 	
+
 	
 	Dim wood_stamp As Long = 1564380000000  - (3600000*24)
 	Dim now_stamp As Long = DateTime.Now
 						
 	zmienna = wood_stamp - now_stamp
-	Log("woodstamp:" & wood_stamp)
-	Log("now_stamp:" & now_stamp)
 	DateTime.DateFormat = "HH dd:MM:yyyy"
-	Log("teraz2:" & zmienna & "data: " & DateTime.date(zmienna))
-	
 	
 	
 	DateTime.DateFormat = "dd"
@@ -205,6 +203,7 @@ Sub timer1_Tick
 End Sub
 
 Sub timer2_json_Tick
+	Log("uruchomienie timer2_json_Tick")
 	ShowWeather
 	
 End Sub
@@ -269,15 +268,12 @@ Sub timer2_Tick
 					war = odczyt
 
 					If war > 0 Then
-						tempzew.Text = "+" & odczyt_BT.SubString(i+1) & "°C"
-											
+						tempzew.Text = "+" & odczyt_BT.SubString(i+1) & "°C"									
 					Else
 						tempzew.Text = CRLF & odczyt_BT.SubString(i+1) & "°C"
 					End If
-					If odczyt_BT.SubString2(0, i) <> "Blad" Then
-				
+					If odczyt_BT.SubString2(0, i) <> "Blad" Then	
 						tempwew.Text = odczyt_BT.SubString2(0, i)  & "°C"
-						Log("odczyt: " & odczyt_BT.SubString2(0, i))
 					Else
 						tempwew.Text = "Błąd"
 						Log("test1")
